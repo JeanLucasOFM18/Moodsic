@@ -174,7 +174,7 @@ const GuidedForm = () => {
     const handleSubmit = async (prompt) => {
         if (!prompt.trim()) return alert('Por favor ingresa un texto.');
         try {
-            const res = await fetch('http://localhost:3000/playlist', {
+            const res = await fetch(`${backendUrl}/playlist`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
