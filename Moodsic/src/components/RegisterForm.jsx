@@ -11,6 +11,23 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     
     const handleRegister = async () => {
+
+        if (!name.trim() || !email.trim() || !password.trim()) {
+            alert("Por favor, completa todos los campos.");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Por favor, ingresa un correo válido.");
+            return;
+        }
+
+        if (password.length < 6) {
+            alert("La contraseña debe tener al menos 6 caracteres.");
+            return;
+        }
+
         try {
             await register(email, password, name);
             navigate('/user-panel');

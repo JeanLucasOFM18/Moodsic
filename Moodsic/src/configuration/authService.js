@@ -3,17 +3,24 @@ import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from './firebase'; 
 
 export const register = async (email, password, name) => {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  const user = userCredential.user;
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-  await setDoc(doc(db, 'usuarios', user.uid), {
-    name,
-    email,
-    likedSongs: []
-  });
+    await setDoc(doc(db, 'usuarios', user.uid), {
+      name,
+      email,
+      likedSongs: []
+    });
 
-  return userCredential;
+    console.log('Documento guardado en Firestore');
+    return userCredential;
+  } catch (error) {
+    console.error('Error al registrar:', error.message);
+    throw error;
+  }
 };
+
 
 export const login = async (email, password) => {
   return await signInWithEmailAndPassword(auth, email, password);
