@@ -12,13 +12,14 @@ const FreeInput = () => {
     const [songsInfo, setSongsInfo] = useState({});
     const [likedSongs, setLikedSongs] = useState({});
     const [loading, setLoading] = useState(false);
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const submmitText = async (prompt) => {
         setStep(1);
         setLoading(true);
         if (!prompt.trim()) return alert('Por favor ingresa un texto.');
         try {
-            const res = await fetch('http://localhost:3000/playlist', {
+            const res = await fetch(`${backendUrl}/playlist`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ const FreeInput = () => {
     useEffect(() => {
         if (result?.songs?.length) {
             result.songs.forEach((song, index) => {
-            fetch("http://localhost:3000/track-info", {
+            fetch(`${backendUrl}/track-info`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name: song.name, artist: song.artist }),

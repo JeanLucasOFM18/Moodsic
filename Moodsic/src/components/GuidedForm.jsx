@@ -18,6 +18,8 @@ const GuidedForm = () => {
     const [likedSongs, setLikedSongs] = useState({});
     const [songsInfo, setSongsInfo] = useState({}); 
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
     const handleLikeAndSave = async (index, song) => {
         const user = auth.currentUser;
         if (!user) {
@@ -63,7 +65,7 @@ const GuidedForm = () => {
     useEffect(() => {
     if (result?.songs?.length) {
         result.songs.forEach((song, index) => {
-        fetch("http://localhost:3000/track-info", {
+        fetch(`${backendUrl}/track-info`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name: song.name, artist: song.artist }),
